@@ -346,11 +346,12 @@ public class PusherConnection: WebSocketDelegate {
         case "pusher_internal:member_removed":
             handleMemberRemovedEvent(jsonObject)
         default:
-            callGlobalCallbacks(eventName, jsonObject: jsonObject)
-            if let channelName = jsonObject["channel"] as? String, internalChannel = self.channels.find(channelName) {
-                if let eName = jsonObject["event"] as? String, eData = jsonObject["data"] as? String {
-                    internalChannel.handleEvent(eName, eventData: eData)
-                }
+            break
+        }
+        callGlobalCallbacks(eventName, jsonObject: jsonObject)
+        if let channelName = jsonObject["channel"] as? String, internalChannel = self.channels.find(channelName) {
+            if let eName = jsonObject["event"] as? String, eData = jsonObject["data"] as? String {
+                internalChannel.handleEvent(eName, eventData: eData)
             }
         }
     }
